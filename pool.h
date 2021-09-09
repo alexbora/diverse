@@ -1,4 +1,4 @@
-/* pool.h - Allocation Pool Library 
+/* pool.h - Allocation Pool Library
  * Copyright (C) 2007 Christopher Wellons <mosquitopsu@gmail.com>
  *
  * This program is free software; you can redistribute it and/or
@@ -15,53 +15,51 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA.
- */ 
+ */
 
 /* This is an attempt to implement a thread-safe allocation
  * pool. Thread safety is an option, which is turned on by defining
  * POOL_THR_SAFE. Thread safety makes the pool about 40 times slower,
  * so only turn it on if you are sure need it.
- * 
+ *
  */
 
 #ifndef POOL_H
 #define POOL_H
-
+#include <stddef.h>
 #ifdef POOL_THR_SAFE
-#  include <semaphore.h>
+#include <semaphore.h>
 #endif
 
 extern int default_pool_size;
 
-typedef struct subpool_t
-{
-  void *mem_block;		/* beginning of the memory block */
-  void *free_start;		/* start of free segment */
-  void *free_end;		/* end of free segment */
-  size_t size;			/* total size of the block */
-  int misses;			/* allocation misses for this subpool */
-  struct subpool_t *next;	/* next subpool in this pool */
+typedef struct subpool_t {
+  void *mem_block;        /* beginning of the memory block */
+  void *free_start;       /* start of free segment */
+  void *free_end;         /* end of free segment */
+  size_t size;            /* total size of the block */
+  int misses;             /* allocation misses for this subpool */
+  struct subpool_t *next; /* next subpool in this pool */
 } subpool_t;
 
-typedef struct pool_t
-{
-  subpool_t *pools;		/* first element in linked list */
-  subpool_t *first;		/* first good subpool in list */
+typedef struct pool_t {
+  subpool_t *pools; /* first element in linked list */
+  subpool_t *first; /* first good subpool in list */
 #ifdef POOL_THR_SAFE
-  sem_t lock;			/* mutex lock for thread safety */
+  sem_t lock; /* mutex lock for thread safety */
 #endif
 } pool_t;
 
 /* Create a pool with a given initial size. If init_size is 0, the
  * default size is used. Returns NULL if malloc() fails. */
-pool_t *create_pool (size_t init_size);
+pool_t *create_pool(size_t init_size);
 
 /* Returns a pointer to the allocated size bytes from the given
  * pool. Returns NULL if malloc() fails. */
-void *pool_alloc (pool_t * source_pool, size_t size);
+void *pool_alloc(pool_t *source_pool, size_t size);
 
 /* Frees all data allocated by the pool. This will free all data
  * obtained by pool_alloc for this pool. */
-void free_pool (pool_t * source_pool);
+void free_pool(pool_t *source_pool);
 
 #endif
