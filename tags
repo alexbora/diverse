@@ -1,0 +1,29 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+CFLAGS	Makefile	/^CFLAGS = -g -O2 -W -Wall -DPOOL_THR_SAFE$/;"	m
+OBJ	Makefile	/^OBJ = main.o pool.o$/;"	m
+POOL_H	pool.h	/^#define POOL_H$/;"	d
+create_pool	pool.c	/^pool_t *create_pool(size_t init_size) {$/;"	f
+create_subpool_node	pool.c	/^subpool_t *create_subpool_node(size_t size) {$/;"	f
+default_pool_size	pool.c	/^int default_pool_size = 512;$/;"	v
+first	pool.h	/^  subpool_t *first; \/* first good subpool in list *\/$/;"	m	struct:pool_t
+free_end	pool.h	/^  void *free_end;         \/* end of free segment *\/$/;"	m	struct:subpool_t
+free_pool	pool.c	/^void free_pool(pool_t *source_pool) {$/;"	f
+free_start	pool.h	/^  void *free_start;       \/* start of free segment *\/$/;"	m	struct:subpool_t
+lock	pool.h	/^  sem_t lock; \/* mutex lock for thread safety *\/$/;"	m	struct:pool_t
+main	main.c	/^int main ()$/;"	f
+mem_block	pool.h	/^  void *mem_block;        \/* beginning of the memory block *\/$/;"	m	struct:subpool_t
+miss_limit	pool.c	/^int miss_limit        = 8;$/;"	v
+misses	pool.h	/^  int misses;             \/* allocation misses for this subpool *\/$/;"	m	struct:subpool_t
+next	pool.h	/^  struct subpool_t *next; \/* next subpool in this pool *\/$/;"	m	struct:subpool_t	typeref:struct:subpool_t::subpool_t
+pool_alloc	pool.c	/^void *pool_alloc(pool_t *source_pool, size_t size) {$/;"	f
+pool_t	pool.h	/^typedef struct pool_t {$/;"	s
+pool_t	pool.h	/^} pool_t;$/;"	t	typeref:struct:pool_t
+pools	pool.h	/^  subpool_t *pools; \/* first element in linked list *\/$/;"	m	struct:pool_t
+size	pool.h	/^  size_t size;            \/* total size of the block *\/$/;"	m	struct:subpool_t
+subpool_t	pool.h	/^typedef struct subpool_t {$/;"	s
+subpool_t	pool.h	/^} subpool_t;$/;"	t	typeref:struct:subpool_t
